@@ -61,8 +61,8 @@ void loop () {
  HUMEDAD = dht.readHumidity();		// almacena en variable valor leido de humedad
  Nombrearchivo = ano + mes + dia + ".txt";
  Imprimir = Date + " " + Hour + "," + TEMPERATURA + "," + HUMEDAD;
- /*
- if (((fecha.hour() <= 6) || (fecha.hour() >= 19)) && (fecha.minute() == 00)){
+
+ if ((fecha.hour() <= 6) && (fecha.hour() >= 19) && (fecha.minute() == 00)){
   File dataFile = SD.open(Nombrearchivo, FILE_WRITE);
   if (dataFile){
     dataFile.println(Imprimir);
@@ -70,13 +70,8 @@ void loop () {
     dataFile.close();
     }    
  }
- */
- if (fecha.hour() == 20 && fecha.minute() == 00){
-    evento_fin = false;
-    evento_inicio = true;	   
- }  
  
- if (((fecha.hour() >= 7) || (fecha.hour() <= 10)) && (fecha.minute() == 00)){
+ if ((fecha.hour() >= 7) && (fecha.hour() <= 18) && (fecha.minute() == 00) && (fecha.second() == 00)){
     if ( evento_inicio == true ){			// si evento_inicio es verdadero
       digitalWrite(RELE, HIGH);				// activa modulo de rele con nivel alto
       Serial.println( "Rele encendido" );		// muestra texto en monitor serie
@@ -91,54 +86,7 @@ void loop () {
     }       
   }
   
- if (((fecha.hour() >= 7) || (fecha.hour() <= 10)) && (fecha.minute() == 1)){
-  if ( evento_fin == true ){				// si evento_fin es verdadero
-    digitalWrite(RELE, LOW);				// desactiva modulo de rele con nivel bajo
-    Serial.println( "Rele apagado" );			// muestra texto en monitor serie
-    evento_fin = false;
-    evento_inicio = true;				// carga valor falso en variable de control
-    }		     
-  }  
-
- if (((fecha.hour() >= 11) || (fecha.hour() <= 13)) && (fecha.minute() == 00)){
-    if ( evento_inicio == true ){			// si evento_inicio es verdadero
-      digitalWrite(RELE, HIGH);				// activa modulo de rele con nivel alto
-      Serial.println( "Rele encendido" );		// muestra texto en monitor serie
-      evento_inicio = false;	
-      evento_fin = true;
-      File dataFile = SD.open(Nombrearchivo, FILE_WRITE);
-      if (dataFile){
-        dataFile.println(Imprimir);
-        Serial.println(Imprimir);
-        dataFile.close();
-      }
-    } 
-  }
- if (((fecha.hour() >= 11) || (fecha.hour() <= 13)) && (fecha.minute() == 1)){
-  if ( evento_fin == true ){				// si evento_fin es verdadero
-    digitalWrite(RELE, LOW);				// desactiva modulo de rele con nivel bajo
-    Serial.println( "Rele apagado" );			// muestra texto en monitor serie
-    evento_fin = false;
-    evento_inicio = true;				// carga valor falso en variable de control
-    }		     
-  } 
-   
- if (((fecha.hour() >= 14) || (fecha.hour() <= 18)) && (fecha.minute() == 0)){
-    if ( evento_inicio == true ){			// si evento_inicio es verdadero
-      digitalWrite(RELE, HIGH);				// activa modulo de rele con nivel alto
-      Serial.println( "Rele encendido" );		// muestra texto en monitor serie
-      evento_inicio = false;	
-      evento_fin = true;
-      File dataFile = SD.open(Nombrearchivo, FILE_WRITE);
-      if (dataFile){
-      dataFile.println(Imprimir);
-      Serial.println(Imprimir);
-      dataFile.close();
-      }         
-    }
-  
-  }
- if (((fecha.hour() >= 14) || (fecha.hour() <= 18)) && (fecha.minute() == 1)){
+ if ((fecha.hour() >= 7) && (fecha.hour() <= 19) && (fecha.minute() == 00) && (fecha.second() == 45)){
   if ( evento_fin == true ){				// si evento_fin es verdadero
     digitalWrite(RELE, LOW);				// desactiva modulo de rele con nivel bajo
     Serial.println( "Rele apagado" );			// muestra texto en monitor serie
